@@ -25,11 +25,6 @@ location (filtered in search)
 pricepernight (used in filters or ordering)
 
 🛠️ 2. CREATE INDEX Commands (Save to database_index.sql)
-sql
-Copy
-Edit
--- database_index.sql
-
 -- User Table
 CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_users_role ON users(role);
@@ -43,18 +38,23 @@ CREATE INDEX idx_bookings_start_date ON bookings(start_date);
 -- Property Table
 CREATE INDEX idx_properties_location ON properties(location);
 CREATE INDEX idx_properties_price ON properties(pricepernight);
+
 ⏱️ 3. Measure Query Performance
-You can use EXPLAIN or ANALYZE to compare performance before and after indexing. Here's an example:
+Before Creating Indexes
 
-
--- Before indexing
 EXPLAIN ANALYZE
-SELECT *
+SELECT * 
 FROM bookings
-WHERE user_id = 'some-user-id' AND status = 'confirmed';
+WHERE user_id = 'abc-123' AND status = 'confirmed';
+This will show whether the database uses a sequential scan.
 
--- After indexing
--- Run the same query again and compare the cost and execution time
+🚀 After Creating Indexes
+Re-run the same query:
+
+EXPLAIN ANALYZE
+SELECT * 
+FROM bookings
+WHERE user_id = 'abc-123' AND status = 'confirmed';
 ✅ Expected Outcome:
 Queries with filters on user_id, status, location, or email should run significantly faster.
 
