@@ -1,7 +1,5 @@
 🔁 1. INNER JOIN – Get all bookings and the users who made them
-sql
-Copy
-Edit
+
 SELECT 
   bookings.booking_id,
   bookings.start_date,
@@ -17,14 +15,18 @@ INNER JOIN users ON bookings.user_id = users.user_id;
 🧩 2. LEFT JOIN – Get all properties and their reviews (including properties without reviews)
 
 SELECT 
-  properties.property_id,
-  properties.name AS property_name,
-  reviews.review_id,
-  reviews.rating,
-  reviews.comment
-FROM properties
-LEFT JOIN reviews ON properties.property_id = reviews.property_id;
-
+    p.property_id,
+    p.name AS property_name,
+    r.review_id,
+    r.rating,
+    r.comment,
+    r.created_at AS review_date
+FROM 
+    property p
+LEFT JOIN 
+    review r ON p.property_id = r.property_id
+ORDER BY 
+    p.property_id;
 
 🔄 3. FULL OUTER JOIN – Get all users and all bookings (even unmatched ones)
 
